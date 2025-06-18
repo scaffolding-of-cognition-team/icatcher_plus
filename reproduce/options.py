@@ -273,8 +273,8 @@ def parse_arguments_for_preprocess():
     args.output_folder.mkdir(parents=True, exist_ok=True)
     args.video_folder = args.output_folder / "raw_videos"
     args.faces_folder = args.output_folder / "faces"
-    # args.label_folder = args.output_folder / "coding_first"
-    # args.label2_folder = args.output_folder / "coding_second"
+    args.label_folder = args.output_folder / "coding_first"
+    args.label2_folder = args.output_folder / "coding_second"
     args.train_folder = args.output_folder / "train"
     args.val_folder = args.output_folder / "validation"
     args.train_coding1_folder = args.train_folder / "coding_first"

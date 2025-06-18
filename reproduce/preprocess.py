@@ -1,3 +1,12 @@
+#To run this I had to do the following after the initial installation:
+# conda install seaborn
+# pip unintall numpy
+# pip unintall numpy
+# pip intall numpy=1.25.1
+# conda install conda-forge::scikit-learn
+# conda install conda-forge::pingouin
+
+
 import os
 import shutil
 from pathlib import Path
@@ -5,7 +14,7 @@ import cv2
 import numpy as np
 import time
 import logging
-# import visualize
+import visualize
 from PIL import Image
 import face_classifier.fc_model
 import face_classifier.fc_data
