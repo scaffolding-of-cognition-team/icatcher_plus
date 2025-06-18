@@ -16,7 +16,7 @@ from matplotlib.patches import Patch
 from options import parse_arguments_for_visualizations
 import parsers
 import preprocess
-from statistics.bootstrap import bootstrap, t_test, t_test_paired
+from bootstrap import bootstrap, t_test, t_test_paired
 import warnings
 
 
