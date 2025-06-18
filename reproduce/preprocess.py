@@ -855,10 +855,12 @@ def report_dataset_stats(args):
     visualize_human_confusion_matrix(Path(args.output_folder, "confusion.pdf"))
 
 
-def preprocess_raw_generic_dataset(args, force_create=False):
+def preprocess_soc_dataset(args, force_create=False):
     """
-    deprecated
-    :param args:
+    This takes in data from the soc lab which uses a participant's name and searches for the movie and the coding files in the appropriate places
+    Looks for a folder that contains the folder structure: videos, coding_first, coding_second
+    It then copies the files to the appropriate folders in the args object.
+    To set this up, you should copy over a participant video file into this folder, as well as the coding files
     :param force_create:
     :return:
     """
@@ -918,8 +920,8 @@ if __name__ == "__main__":
         preprocess_raw_lookit_dataset(args)
     elif args.raw_dataset_type == "cali-bw" or args.raw_dataset_type == "senegal":
         preprocess_raw_marchman_dataset(args)
-    elif args.raw_dataset_type == "generic":
-        preprocess_raw_generic_dataset(args, force_create=False)
+    elif args.raw_dataset_type == "soc":
+        preprocess_soc_dataset(args, force_create=False)
     else:
         raise NotImplementedError
 

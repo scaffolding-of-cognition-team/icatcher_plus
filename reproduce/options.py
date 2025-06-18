@@ -247,7 +247,7 @@ def parse_arguments_for_preprocess():
     parser = argparse.ArgumentParser()
     parser.add_argument("raw_dataset_path", type=str, help="path to raw dataset to preprocess")
     parser.add_argument("output_folder", type=str, help="path to put preprocessed dataset")
-    parser.add_argument("--raw_dataset_type", type=str, choices=["lookit", "cali-bw", "senegal", "generic"], default="lookit",
+    parser.add_argument("--raw_dataset_type", type=str, choices=["lookit", "cali-bw", "senegal", "soc"], default="soc",
                         help="the type of dataset to preprocess")
     parser.add_argument("--fc_model", type=str, default="models/face_classifier_weights_best.pt", help="path to face classifier model if it was trained")
     parser.add_argument("--pre_split", type=str, help="path to pre_split file that encodes which video belongs to train and validation")
