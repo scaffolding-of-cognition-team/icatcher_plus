@@ -885,8 +885,8 @@ def preprocess_soc_dataset(args, force_create=False):
     raw_coding_second_path = Path(args.raw_dataset_path / 'coding_second')
 
     videos = [f.stem for f in raw_videos_path.glob("*.mp4")]
-    coding_first = ["_".join(f.stem.split("_")[:-1]) for f in raw_coding_first_path.glob("*")]
-    coding_second = ["_".join(f.stem.split("_")[:-1]) for f in raw_coding_second_path.glob("*")]
+    coding_first = ["_".join(f.stem.split("_")[:-1]) for f in raw_coding_first_path.glob("*.csv")]
+    coding_second = ["_".join(f.stem.split("_")[:-1]) for f in raw_coding_second_path.glob("*.csv")]
     coding_ext = next(raw_coding_first_path.glob("*")).suffix
 
     logging.info('[preprocess_raw] coding_first: {}'.format(len(coding_first)))
@@ -899,17 +899,17 @@ def preprocess_soc_dataset(args, force_create=False):
         if not Path(args.video_folder, (file + '.mp4')).is_file() or force_create:
             shutil.copyfile(raw_videos_path / (file + '.mp4'), args.video_folder / (file + '.mp4'))
         if not Path(args.label_folder, (file + coding_ext)).is_file() or force_create:
-            real_file = next(raw_coding_first_path.glob(file+"*"))
+            real_file = next(raw_coding_first_path.glob(file+"*.csv"))
             shutil.copyfile(real_file, args.label_folder / (file + coding_ext))
 
     for i, file in enumerate(sorted(list(test_set))):
         if not Path(args.video_folder, (file + '.mp4')).is_file() or force_create:
             shutil.copyfile(raw_videos_path / (file + '.mp4'), args.video_folder / (file + '.mp4'))
         if not Path(args.label_folder, (file + coding_ext)).is_file() or force_create:
-            real_file = next(raw_coding_first_path.glob(file + "*"))
+            real_file = next(raw_coding_first_path.glob(file + "*.csv"))
             shutil.copyfile(real_file, args.label_folder / (file + coding_ext))
         if not Path(args.label2_folder, (file + coding_ext)).is_file() or force_create:
-            real_file = next(raw_coding_second_path.glob(file + "*"))
+            real_file = next(raw_coding_second_path.glob(file + "*.csv"))
             shutil.copyfile(real_file, args.label2_folder / (file + coding_ext))
 
 
