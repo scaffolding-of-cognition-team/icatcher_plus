@@ -473,7 +473,8 @@ def process_dataset_lowest_face(args, gaze_labels_only=False, force_create=False
     :param force_create: forces creation of files even if they exist
     :return:
     """
-    classes = {"away": 0, "left": 1, "right": 2}
+    classes = args.gaze_classes
+    print("Gaze classes: {}".format(classes))
     video_list = sorted(list(args.video_folder.glob("*")))
     net = cv2.dnn.readNetFromCaffe(str(args.config_file), str(args.face_model_file))
     for video_file in video_list:
@@ -889,6 +890,8 @@ def preprocess_soc_dataset(args, force_create=False):
     coding_first = [f.stem for f in raw_coding_first_path.glob("*" + coding_ext)]
     coding_second = [f.stem for f in raw_coding_second_path.glob("*" + coding_ext)]
 
+    # Update the gaze classes
+    args.gaze_classes = {"away": 0, "center": 1, "left": 2, "right": 3}
 
     logging.info('[preprocess_raw] coding_first: {}'.format(len(coding_first)))
     logging.info('[preprocess_raw] coding_second: {}'.format(len(coding_second)))
