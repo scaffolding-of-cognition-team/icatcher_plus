@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 import time
 import logging
-import visualize
+# import visualize
 from PIL import Image
 import face_classifier.fc_model
 import face_classifier.fc_data
