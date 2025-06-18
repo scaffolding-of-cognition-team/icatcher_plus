@@ -875,12 +875,6 @@ def preprocess_soc_dataset(args, force_create=False):
     raw_coding_first_path = Path(args.raw_dataset_path / 'coding_first')
     raw_coding_second_path = Path(args.raw_dataset_path / 'coding_second')
 
-    # quick hack to deal with spaces in name of files
-    import os
-    for f in raw_coding_first_path.glob("*"):
-        os.rename(str(f), str(Path(f.parent, f.name.strip())))
-    # end quick hack
-
     videos = [f.stem for f in raw_videos_path.glob("*.mp4")]
     coding_first = ["_".join(f.stem.split("_")[:-1]) for f in raw_coding_first_path.glob("*")]
     coding_second = ["_".join(f.stem.split("_")[:-1]) for f in raw_coding_second_path.glob("*")]
