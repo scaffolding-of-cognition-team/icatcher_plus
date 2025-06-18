@@ -11,3 +11,5 @@ node_modules/
 tests/test_data/test_short/
 tests/test_data/test_short.npz
 tests/test_data/test_short.txt
+training/*/*/*.mp4
+training/*/*/*.csv

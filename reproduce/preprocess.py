@@ -860,7 +860,9 @@ def preprocess_soc_dataset(args, force_create=False):
     This takes in data from the soc lab which uses a participant's name and searches for the movie and the coding files in the appropriate places
     Looks for a folder that contains the folder structure: videos, coding_first, coding_second
     It then copies the files to the appropriate folders in the args object.
-    To set this up, you should copy over a participant video file into this folder, as well as the coding files
+    To set this up, you should 
+    1. copy over a participant video file into this folder
+    2. copy coding files that have been converted to a csv file using the 'convert_LookIt_coder_file_csv.m' script
     :param force_create:
     :return:
     """
