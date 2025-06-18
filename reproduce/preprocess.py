@@ -884,7 +884,7 @@ def preprocess_soc_dataset(args, force_create=False):
     raw_coding_first_path = Path(args.raw_dataset_path / 'coding_first')
     raw_coding_second_path = Path(args.raw_dataset_path / 'coding_second')
     
-    coding_ext = 'csv' # What is the extension for the coding files?
+    coding_ext = '.csv' # What is the extension for the coding files?
     videos = [f.stem for f in raw_videos_path.glob("*.mp4")]
     coding_first = [f.stem for f in raw_coding_first_path.glob("*" + coding_ext)]
     coding_second = [f.stem for f in raw_coding_second_path.glob("*" + coding_ext)]
