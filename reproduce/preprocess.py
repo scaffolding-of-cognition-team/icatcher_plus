@@ -886,8 +886,8 @@ def preprocess_soc_dataset(args, force_create=False):
     
     coding_ext = 'csv' # What is the extension for the coding files?
     videos = [f.stem for f in raw_videos_path.glob("*.mp4")]
-    coding_first = ["_".join(f.stem.split("_")[:-1]) for f in raw_coding_first_path.glob("*" + coding_ext)]
-    coding_second = ["_".join(f.stem.split("_")[:-1]) for f in raw_coding_second_path.glob("*" + coding_ext)]
+    coding_first = [f.stem for f in raw_coding_first_path.glob("*" + coding_ext)]
+    coding_second = [f.stem for f in raw_coding_second_path.glob("*" + coding_ext)]
 
 
     logging.info('[preprocess_raw] coding_first: {}'.format(len(coding_first)))
