@@ -24,16 +24,13 @@ video_files = dir(fullfile(videos_path, [pattern_str, '*']));
 
 % Loop through the video file
 for ppt_counter = 1:length(video_files)
-    video_file = video_files(ppt_counter).name;
-    
-    % Extract the base name without extension
-    base_name = video_file(1:end-4);
+    ppt = video_files(ppt_counter).name;
     
     % Find the corresponding coder files
-    coder_files = dir(fullfile(coders_path, [base_name, '_*.mat']));
+    coder_files = dir(fullfile(coders_path, [ppt, '_*.mat']));
     
     if isempty(coder_files)
-        fprintf('No coder files found for %s\n', base_name);
+        fprintf('No coder files found for %s\n', ppt);
         continue;
     end
     
@@ -41,13 +38,13 @@ for ppt_counter = 1:length(video_files)
     valid_coders = {};
     for coder_counter = 1:length(coder_files)
         coder_name = coder_files(coder_counter).name(1:end-4); % Remove .csv extension
-        if ~strcmp(coder_name, 'Coder_FSpot') && ~strcmp(coder_name, 'Coder_Test') && contains(coder_name, base_name)
+        if ~strcmp(coder_name, 'Coder_FSpot') && ~strcmp(coder_name, 'Coder_Test') && contains(coder_name, ppt)
             valid_coders{end+1} = coder_name; %#ok<AGROW>
         end
     end
     
     if isempty(valid_coders)
-        fprintf('No valid coders found for %s\n', base_name);
+        fprintf('No valid coders found for %s\n', ppt);
         continue;
     end
     
