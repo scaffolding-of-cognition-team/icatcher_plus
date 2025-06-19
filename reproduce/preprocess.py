@@ -603,7 +603,7 @@ def process_dataset_lowest_face(args, gaze_labels_only=False, force_create=False
                         no_annotation_counter += 1
                         gaze_labels.append(-2)
                         face_labels.append(-2)
-                        logging.info("[process_lkt_legacy] Skipping since frame is invalid")
+                        # logging.info("[process_lkt_legacy] Skipping since frame is invalid")
                 else:
                     no_annotation_counter += 1
                     gaze_labels.append(-2)
@@ -657,7 +657,7 @@ def generate_second_gaze_labels(args, force_create=False, visualize_confusion=Fa
         vfr, meta_data = video.is_video_vfr(video_file, get_meta_data=True)
         if vfr:
             logging.warning("video file: {} has variable frame rate".format(str(video_file)))
-            logging.info(str(meta_data))
+            # logging.info(str(meta_data))
             frame_info, vfr_frame_counter, _ = video.get_frame_information(video_file)
 
         if not (args.train_coding1_folder / (video_file.stem + suffix)).exists() and \
