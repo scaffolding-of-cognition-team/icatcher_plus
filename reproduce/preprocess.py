@@ -731,7 +731,7 @@ def visualize_human_confusion_matrix(path):
                 idxs = np.where((gaze_labels >= 0) & (gaze_labels_second >= 0))
                 labels.extend(list(gaze_labels[idxs]))
                 preds.extend(list(gaze_labels_second[idxs]))
-    _, _, _ = visualize.calculate_confusion_matrix(labels, preds, path)
+    _, _, _ = visualize.calculate_confusion_matrix(labels, preds, path, class_labels=args.gaze_classes)
 
 
 def gen_lookit_multi_face_subset(force_create=False):
