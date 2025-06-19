@@ -504,7 +504,7 @@ def process_dataset_lowest_face(args, gaze_labels_only=False, force_create=False
         fps = video.get_fps(video_file)
         if vfr:
             logging.warning("[process_lkt_legacy] video file: {} has variable frame rate".format(str(video_file)))
-            logging.info(str(meta_data))
+            # logging.info(str(meta_data))
             frame_info, vfr_frame_counter, _ = video.get_frame_information(video_file)
         else:
             logging.info("[process_lkt_legacy] video fps: {}".format(fps))
