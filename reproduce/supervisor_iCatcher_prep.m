@@ -37,8 +37,8 @@ for ppt_counter = 1:length(video_files)
     % Check if the coder files are valid
     valid_coders = {};
     for coder_counter = 1:length(coder_files)
-        coder_name = coder_files(coder_counter).name(1:end-4); % Remove .csv extension
-        if ~strcmp(coder_name, 'Coder_FSpot') && ~strcmp(coder_name, 'Coder_Test') && contains(coder_name, ppt)
+        coder_name = coder_files(coder_counter).name; % Remove .csv extension
+        if ~strcmp(coder_name, 'Coder_FSpot') && ~strcmp(coder_name, 'Coder_Test')
             valid_coders{end+1} = coder_name; %#ok<AGROW>
         end
     end
@@ -68,8 +68,6 @@ for ppt_counter = 1:length(video_files)
 
     % Randomly select a first coder
     ordered_coders = finished_coders(randperm(length(finished_coders))); 
-
-    ordered_coders
     
     % Check if there are more than two coders
     if length(ordered_coders) > 2
