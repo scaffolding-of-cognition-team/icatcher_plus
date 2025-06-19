@@ -46,7 +46,7 @@ def get_frame_information(video_file_path):
     video_frames = [frame for frame in output['frames'] if frame['media_type'] == 'video']
     frame_times = [frame["best_effort_timestamp_time"] for frame in video_frames]
     video_stream_info = next(s for s in output['streams'] if s['codec_type'] == 'video')
-    assert len(frame_times) == int(video_stream_info["nb_frames"])
+    assert len(frame_times) == int(video_stream_info["nb_frames"]), "Number of frames in video stream %d does not match number of frames in frame times %d." % (int(video_stream_info["nb_frames"]), len(frame_times))
     frame_times_ms = [1000*float(x) for x in frame_times]
     if frame_times_ms[0] != 0.0:
         logging.warning("Frame times do not start at 0.0, this may cause issues with frame indexing, so it is being fixed by shifting the time.")
