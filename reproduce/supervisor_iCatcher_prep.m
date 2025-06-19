@@ -62,7 +62,7 @@ for ppt_counter = 1:length(video_files)
         
     end
     if isempty(finished_coders)
-        fprintf('No finished coders found for %s\n', base_name);
+        fprintf('No finished coders found for %s\n', ppt);
         continue;
     end
 
@@ -72,7 +72,8 @@ for ppt_counter = 1:length(video_files)
     % Check if there are more than two coders
     if length(ordered_coders) > 2
         ordered_coders = ordered_coders{1:2}; % Only take the first two coders
-        fprintf('More than two coders found for %s, using first two: %s and %s\n', base_name, ordered_coders{1}, ordered_coders{2});
+        fprintf('More than two coders found for %s, using first two: %s and %s\n', ppt, ordered_coders{1}, ordered_coders{2});
+        continue
     end
 
     % Copy over the coder file to the output directory
@@ -81,7 +82,7 @@ for ppt_counter = 1:length(video_files)
         coder_file = fullfile(coders_path, [coder_name, '.mat']);
         
         % What is the 
-        output_file = fullfile(output_dir, coder_directories{coder_counter}, [base_name, '.csv']);
+        output_file = fullfile(output_dir, coder_directories{coder_counter}, [ppt, '.csv']);
 
         % Run the conversion function to convert the coder file to the output format
         convert_Lookit_coder_file(coder_file, output_file);
@@ -104,10 +105,10 @@ for ppt_counter = 1:length(video_files)
         last_video = potential_video_names{end};
 
         % Copy the video file to the output directory
-        output_video_file = fullfile(output_dir, 'videos', [base_name, '.mp4']);
+        output_video_file = fullfile(output_dir, 'videos', [ppt, '.mp4']);
         copyfile(fullfile(videos_path, last_video), output_video_file);
     else
-        fprintf('No videos found for %s\n', base_name);
+        fprintf('No videos found for %s\n', ppt);
         continue;
     end
 
