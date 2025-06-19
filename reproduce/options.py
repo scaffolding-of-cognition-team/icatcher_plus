@@ -258,6 +258,7 @@ def parse_arguments_for_preprocess():
     parser.add_argument("--val_percent", type=float, default=0.2, help="desired percent of validation set")
     parser.add_argument("--face_detector_confidence", type=float, default=0.7, help="confidence threshold for face detector")
     parser.add_argument("--gpu_id", type=int, default=-1, help="Which GPU to use (or -1 for cpu)")
+    parser.add_argument("--require_double_coding", type=bool, default=False, help="Are two coders required to code each video?")
     parser.add_argument("--log", help="if present, writes log to this path")
     parser.add_argument("--seed", type=int, default=43, help="random seed (controls split selection)")
     parser.add_argument("-v", "--verbosity", type=str, choices=["debug", "info", "warning"], default="info",
@@ -271,6 +272,7 @@ def parse_arguments_for_preprocess():
         assert args.pre_split.is_file()
     args.output_folder = Path(args.output_folder)
     args.output_folder.mkdir(parents=True, exist_ok=True)
+    
     args.video_folder = args.output_folder / "raw_videos"
     args.faces_folder = args.output_folder / "faces"
     args.label_folder = args.output_folder / "coding_first"
@@ -281,17 +283,19 @@ def parse_arguments_for_preprocess():
     args.train_coding2_folder = args.train_folder / "coding_second"
     args.val_coding1_folder = args.val_folder / "coding_first"
     args.val_coding2_folder = args.val_folder / "coding_second"
+
     args.video_folder.mkdir(parents=True, exist_ok=True)
     args.train_coding1_folder.mkdir(parents=True, exist_ok=True)
     args.train_coding2_folder.mkdir(parents=True, exist_ok=True)
     args.val_coding1_folder.mkdir(parents=True, exist_ok=True)
     args.val_coding2_folder.mkdir(parents=True, exist_ok=True)
     args.faces_folder.mkdir(parents=True, exist_ok=True)
+
     args.gaze_classes = {"away": 0, "left": 1, "right": 2} 
     args.multi_face_folder = args.output_folder / "multi_face"
     args.face_data_folder = args.output_folder / "infant_vs_others"
     args.fc_model = Path(args.fc_model)
-    iCatcher_models_dir = '/home/cte/.cache/icatcher_plus/0.2.3/icatcher+_models.zip.unzip/'
+    args.iCatcher_models_dir = '/home/cte/.cache/icatcher_plus/0.2.3/icatcher+_models.zip.unzip/'
     args.face_model_file = iCatcher_models_dir + 'face_model.caffemodel'
     args.config_file = iCatcher_models_dir + "config.prototxt"
     if args.gpu_id == -1:

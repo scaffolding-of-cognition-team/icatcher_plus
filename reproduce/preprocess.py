@@ -5,6 +5,12 @@
 # pip intall numpy=1.25.1
 # conda install conda-forge::scikit-learn
 # conda install conda-forge::pingouin
+# conda install tensorflow
+#
+# For preprocessing this is the final command that worked
+# python ./reproduce/preprocess.py training/CLRA/ training/CLRA/ --raw_dataset_type soc --fc_model /home/cte/.cache/icatcher_plus/0.2.3/icatcher+_models.zip.unzip/face_classifier_lookit.pth
+#
+# For training this is the command that worked:
 
 
 import os
@@ -898,6 +904,7 @@ def preprocess_soc_dataset(args, force_create=False):
     raw_coding_first_path = Path(args.raw_dataset_path / 'coding_first')
     raw_coding_second_path = Path(args.raw_dataset_path / 'coding_second')
     
+    # Get the lists of videos and coded data
     coding_ext = '.csv' # What is the extension for the coding files?
     videos = [f.stem for f in raw_videos_path.glob("*.mp4")]
     coding_first = [f.stem for f in raw_coding_first_path.glob("*" + coding_ext)]
@@ -910,24 +917,41 @@ def preprocess_soc_dataset(args, force_create=False):
     logging.info('[preprocess_raw] coding_second: {}'.format(len(coding_second)))
     logging.info('[preprocess_raw] videos: {}'.format(len(videos)))
 
-    training_set = set(videos).intersection(set(coding_first))
-    test_set = set(videos).intersection(set(coding_first)).intersection(set(coding_second))
-    for i, file in enumerate(sorted(list(training_set))):
-        if not Path(args.video_folder, (file + '.mp4')).is_file() or force_create:
-            shutil.copyfile(raw_videos_path / (file + '.mp4'), args.video_folder / (file + '.mp4'))
-        if not Path(args.label_folder, (file + coding_ext)).is_file() or force_create:
-            real_file = next(raw_coding_first_path.glob(file+"*"+coding_ext))
-            shutil.copyfile(real_file, args.label_folder / (file + coding_ext))
+    # Shuffle the participant names and then get the last N% of them to be the validation set, where n is args.val_percent
+    np.random.seed(args.seed)  # for reproducibility
+    order = np.arange(len(coding_first))
+    np.random.shuffle(order)
 
-    for i, file in enumerate(sorted(list(test_set))):
-        if not Path(args.video_folder, (file + '.mp4')).is_file() or force_create:
-            shutil.copyfile(raw_videos_path / (file + '.mp4'), args.video_folder / (file + '.mp4'))
-        if not Path(args.label_folder, (file + coding_ext)).is_file() or force_create:
-            real_file = next(raw_coding_first_path.glob(file + "*" + coding_ext))
-            shutil.copyfile(real_file, args.label_folder / (file + coding_ext))
-        if not Path(args.label2_folder, (file + coding_ext)).is_file() or force_create:
-            real_file = next(raw_coding_second_path.glob(file + "*" + coding_ext))
-            shutil.copyfile(real_file, args.label2_folder / (file + coding_ext))
+    # Get the participant order
+    ppts = np.array(videos)[order]
+
+    # Split the participants into training and validation sets    
+    ppt_thresh = int(len(ppts) * (1 - args.val_percent))
+    train_ppts = list(ppts[:ppt_thresh])
+    val_ppts = list(ppts[ppt_thresh:])
+
+    # Get the training participants
+    for ppt in train_ppts + val_ppts:
+
+        # If the participant is a training participant, then the coding files should be in the train_coding1_folder and train_coding2_folder
+        if ppt in train_ppts:
+            out1_dir = args.train_coding1_folder
+            out2_dir = args.train_coding2_folder
+        else:
+            out1_dir = args.val_coding1_folder
+            out2_dir = args.val_coding2_folder
+
+        # Make sure the data is in the raw_videos folder, regardless of whether it is train or validation
+        if not Path(args.video_folder, (ppt + '.mp4')).is_file() or force_create:
+            os.symlink(raw_videos_path / (ppt + '.mp4'), args.video_folder / (ppt + '.mp4'))
+
+        # Now move the coding files to the appropriate folders
+        for in_dir, out_dir in zip([raw_coding_first_path, out1_dir], [raw_coding_second_path, out2_dir]):
+            
+            in_file = in_dir + (ppt + coding_ext)
+            if Path(in_file).is_file() and (Path(out_file).is_file() == 0 or force_create):
+                out_file = out_dir + (ppt + coding_ext)
+                os.symlink(in_file, out_file)
 
 
 if __name__ == "__main__":
@@ -953,3 +977,5 @@ if __name__ == "__main__":
     report_dataset_stats(args)
     if args.fc_model:
         process_dataset_face_classifier(args, force_create=False)
+
+    logging.info("[preprocess] Finished preprocessing dataset: {}".format(args.raw_dataset_type))
