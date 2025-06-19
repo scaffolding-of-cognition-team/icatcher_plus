@@ -509,9 +509,6 @@ def process_dataset_lowest_face(args, gaze_labels_only=False, force_create=False
         else:
             logging.info("[process_lkt_legacy] video fps: {}".format(fps))
 
-        print('Overriding vfr to be false')
-        vfr = False  # override vfr to be false
-        
         if args.raw_dataset_type == "cali-bw" or args.raw_dataset_type == "senegal":
             # make sure target fps is around 30
             assert abs(fps - 30) < 0.1
@@ -661,14 +658,10 @@ def generate_second_gaze_labels(args, force_create=False, visualize_confusion=Fa
             continue
         fps = video.get_fps(video_file)
         vfr, meta_data = video.is_video_vfr(video_file, get_meta_data=True)
-        
         if vfr:
             logging.warning("video file: {} has variable frame rate".format(str(video_file)))
             logging.info(str(meta_data))
             frame_info, vfr_frame_counter, _ = video.get_frame_information(video_file)
-
-        print('Overriding vfr to be false')
-        vfr = False  # override vfr to be false
 
         if not (args.train_coding1_folder / (video_file.stem + suffix)).exists() and \
                 not (args.train_coding2_folder / (video_file.stem + suffix)).exists() and \
