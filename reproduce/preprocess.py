@@ -8,7 +8,7 @@
 # conda install tensorflow
 #
 # For preprocessing this is the final command that worked
-# python ./reproduce/preprocess.py training/CLRA/ training/CLRA/ --raw_dataset_type soc --fc_model /home/cte/.cache/icatcher_plus/0.2.3/icatcher+_models.zip.unzip/face_classifier_lookit.pth
+# python ./reproduce/preprocess.py raw/CLRA/ preprocessed/CLRA/ --raw_dataset_type soc --fc_model /home/cte/.cache/icatcher_plus/0.2.3/icatcher+_models.zip.unzip/face_classifier_lookit.pth
 #
 # For training this is the command that worked:
 
@@ -948,7 +948,7 @@ def preprocess_soc_dataset(args, force_create=False):
         # Now move the coding files to the appropriate folders
         for in_dir, out_dir in zip([raw_coding_first_path, out1_dir], [raw_coding_second_path, out2_dir]):
             
-            in_file = in_dir + (ppt + coding_ext)
+            in_file = in_dir + ppt + coding_ext
             if Path(in_file).is_file() and (Path(out_file).is_file() == 0 or force_create):
                 out_file = out_dir + (ppt + coding_ext)
                 os.symlink(in_file, out_file)
