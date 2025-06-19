@@ -644,9 +644,9 @@ def generate_second_gaze_labels(args, force_create=False, visualize_confusion=Fa
     :param visualize_confusion: if true, visualizes confusion between human annotators.
     :return:
     """
-    classes = {"away": 0, "left": 1, "right": 2}
+    classes =  args.gaze_classes
     video_list = list(args.video_folder.glob("*"))
-    suffix = next(Path(args.train_coding1_folder).glob("*")).suffix
+    suffix = '.csv'
     for video_file in video_list:
         logging.info("[gen_2nd_labels] Video: %s" % video_file.name)
         gaze_labels_second_filename = Path.joinpath(args.faces_folder, video_file.stem, 'gaze_labels_second.npy')
