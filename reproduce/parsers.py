@@ -476,7 +476,13 @@ class socParser(BaseParser):
         self.classes = gaze_classes
 
     def parse(self, video_id, label_path=None):
-        
+        """
+        Parse the coding file for the soc dataset.
+        :param video_id: the id of the video that label_path belongs to.
+        :param label_path: if provided, will parse this file instead of using the first and second coder files.
+        :return: a list of lists as described in the base class, the frame which codings starts, and frame at which it ends
+        """
+
         if label_path is None:
             if self.first_coder:
                 label_path = self.raw_dataset_path / f"coding_first/{video_id}.csv"
@@ -492,7 +498,10 @@ class socParser(BaseParser):
                 frame = int(frame * self.fps / 1000)
             valid_flag = 1 if row['gaze_class'] != 'none' else 0
             output.append([frame, valid_flag, row['gaze_class']])
-        print(output)
+        
+        start = output[0][0] if output else 0 # What is the time when the first code is labeled
+        end = output[-1][0] if output else 0 # What is the time when the last code is labeled
+        return output, start, end
 
 def parse_illegal_transitions_file(path, skip_header=True):
     illegal_transitions = []
