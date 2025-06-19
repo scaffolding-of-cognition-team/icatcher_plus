@@ -42,7 +42,7 @@ def label_to_color(label):
     return mapping[label]
 
 
-def calculate_confusion_matrix(label, pred, save_path=None, mat=None, class_num=3, flip_xy=False, verbose=True):
+def calculate_confusion_matrix(label, pred, save_path=None, mat=None, class_labels=['away', 'left', 'right'], flip_xy=False, verbose=True):
     """
     creates a plot of the confusion matrix given the gt labels abd the predictions.
     if mat is supplied, ignores other inputs and uses that.
@@ -50,15 +50,11 @@ def calculate_confusion_matrix(label, pred, save_path=None, mat=None, class_num=
     :param pred: the predicitions (will be x axis)
     :param save_path: path to save plot
     :param mat: a numpy 3x3 array representing the confusion matrix
-    :param class_num: number of classes
+    :param class_labels: list of the class labels
     :return:
     """
-    if class_num == 2:
-        class_labels = ['on', 'off']
-    elif class_num == 3:
-        class_labels = ['away', 'left', 'right']
-    else:
-        raise ValueError
+    class_num = len(class_labels)
+    
     if mat is None:
         mat = np.zeros([class_num, class_num])
         pred = np.array(pred)
