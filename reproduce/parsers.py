@@ -476,6 +476,8 @@ class socParser(BaseParser):
         self.classes = gaze_classes
 
     def parse(self, video_id, label_path=None):
+        print("Parsing video: " + str(video_id))
+        print("Label path: " + str(label_path))
         if label_path is None:
             if self.first_coder:
                 label_path = self.raw_dataset_path / f"coding_first/{video_id}.csv"
