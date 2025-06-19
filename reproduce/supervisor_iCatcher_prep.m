@@ -68,6 +68,8 @@ for ppt_counter = 1:length(video_files)
 
     % Randomly select a first coder
     ordered_coders = finished_coders(randperm(length(finished_coders))); 
+
+    ordered_coders
     
     % Check if there are more than two coders
     if length(ordered_coders) > 2
