@@ -108,7 +108,7 @@ for ppt_counter = 1:length(video_files)
         % Copy the video file to the output directory
         output_video_file = fullfile(output_dir, 'videos', [ppt, '.mp4']);
         if exist(output_video_file) == 0
-            copyfile(fullfile(videos_path, last_video), output_video_file);
+            copyfile(fullfile(videos_path, ppt, last_video), output_video_file);
         end
     else
         fprintf('No videos found for %s\n', ppt);
