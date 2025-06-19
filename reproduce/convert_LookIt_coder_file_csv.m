@@ -12,18 +12,21 @@ function convert_LookIt_coder_file_csv(coder_file, output_csv)
     % Load in the coder file. The only variable stored is the Output variable
     load(coder_file);
 
+    % Check if the coder finished
+    if length(Output.Experiment) < 1000 
+        fprintf('%s only finished %d frames. Quitting without returning output\n', coder_file, length(Frame_names))
+        return
+    elseif isfield(Output, 'FrameName')
+        fprintf('Cannot find the FrameName variable in the output. Needed for counting frames, so quitting')
+        return
+    end
+
     % Get a cell with all the frame names
     Frame_names = Output.FrameName;
 
     % Get the behavioral report for each frame
     Codes = Output.Experiment;
 
-    % Check if the coder finished
-    if length(Frame_names) < 1000
-        fprintf('%s only finished %d frames. Quitting without returning output\n', coder_file, length(Frame_names))
-        return
-    end
-    
     % Open the output csv file
     fid = fopen(output_csv, 'w');
 
