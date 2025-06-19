@@ -548,7 +548,7 @@ def process_dataset_lowest_face(args, gaze_labels_only=False, force_create=False
                     if responses[response_index][1]:  # make sure response is valid
                         gaze_class = responses[response_index][2]
                         assert gaze_class in classes
-                        gaze_labels.append(classes[gaze_class])
+                        gaze_labels.append(classes.index(gaze_class))  # append gaze label
                         if not gaze_labels_only:
                             bbox = detect_face_opencv_dnn(net, frame, args.face_detector_confidence)
                             if not bbox:
