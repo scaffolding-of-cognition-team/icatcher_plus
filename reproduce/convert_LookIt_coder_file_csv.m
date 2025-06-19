@@ -20,7 +20,7 @@ function convert_LookIt_coder_file_csv(coder_file, output_csv)
 
     % Check if the coder finished
     if (exist('FrameList') == 0) || (length(Frame_names) < length(FrameList))
-        fprintf('%s only finished %d of %d frames. Quitting without returning output\n', coder_file, length(Frame_names), length(FrameList))
+        fprintf('%s only finished %d frames. Quitting without returning output\n', coder_file, length(Frame_names))
         return
     end
     
