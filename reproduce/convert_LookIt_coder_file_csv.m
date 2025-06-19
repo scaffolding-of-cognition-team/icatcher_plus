@@ -16,7 +16,7 @@ function convert_LookIt_coder_file_csv(coder_file, output_csv)
     if length(Output.Experiment) < 1000 
         fprintf('%s only finished %d frames. Quitting without returning output\n', coder_file, length(Frame_names))
         return
-    elseif isfield(Output, 'FrameName')
+    elseif ~isfield(Output, 'FrameName')
         fprintf('Cannot find the FrameName variable in the output. Needed for counting frames, so quitting')
         return
     end
