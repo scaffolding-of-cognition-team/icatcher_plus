@@ -523,9 +523,10 @@ def process_dataset_lowest_face(args, gaze_labels_only=False, force_create=False
                                           first_coder=True,
                                           return_time_stamps=vfr)
         elif args.raw_dataset_type == "soc":
+            classes = list(args.gaze_classes.keys())
             parser = parsers.socParser(fps,
                                        args.raw_dataset_path,
-                                       args.gaze_classes,
+                                       classes,
                                        first_coder=True,
                                        return_time_stamps=vfr)
         else:

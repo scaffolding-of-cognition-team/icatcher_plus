@@ -465,15 +465,15 @@ class DatavyuParser(BaseParser):
 
 class socParser(BaseParser):
     """
-    parses the soc dataset, which is a csv file with gaze classes center, left, right, away (CLRA)
+    parses the soc dataset, which is a csv file with gaze classes
     """
-    def __init__(self, fps, raw_dataset_path, first_coder=True, return_time_stamps=False):
+    def __init__(self, fps, raw_dataset_path, gaze_classes = ['away', 'center', 'left', 'right'], first_coder=True, return_time_stamps=False):
         super().__init__()
         self.fps = fps
         self.first_coder = first_coder
         self.return_time_stamps = return_time_stamps
         self.raw_dataset_path = Path(raw_dataset_path)
-        self.classes = ["away", "center", "left", "right"]
+        self.classes = gaze_classes
 
     def parse(self, video_id, label_path=None):
         if label_path is None:
