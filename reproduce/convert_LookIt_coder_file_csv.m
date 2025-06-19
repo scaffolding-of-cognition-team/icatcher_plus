@@ -17,6 +17,12 @@ function convert_LookIt_coder_file_csv(coder_file, output_csv)
 
     % Get the behavioral report for each frame
     Codes = Output.Experiment;
+
+    % Check if the coder finished
+    if length(Frame_names) < length(FrameList)
+        fprintf('%s only finished %d of %d frames. Quitting without returning output\n', coder_file, length(Frame_names), length(FrameList))
+        return
+    end
     
     % Open the output csv file
     fid = fopen(output_csv, 'w');
