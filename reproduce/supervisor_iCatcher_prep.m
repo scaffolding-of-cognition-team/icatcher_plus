@@ -85,7 +85,7 @@ for ppt_counter = 1:length(video_files)
         output_file = fullfile(output_dir, coder_directories{coder_counter}, [ppt, '.csv']);
 
         % Run the conversion function to convert the coder file to the output format
-        convert_Lookit_coder_file(coder_file, output_file);
+        convert_LookIt_coder_file_csv(coder_file, output_file);
         fprintf('Copied coder file %s to %s\n', coder_file, output_file);
     end
 
