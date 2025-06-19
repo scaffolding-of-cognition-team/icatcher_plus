@@ -547,9 +547,8 @@ def process_dataset_lowest_face(args, gaze_labels_only=False, force_create=False
             if responses:
                 # logging.info("[process_lkt_legacy] Processing frame: {}".format(frame_counter))
                 if frame_counter < len(responses):  # only iterate on annotated frames
-                    # find closest (previous) response this frame belongs to
-                    q = [index for index, val in enumerate(responses) if frame_stamp >= val[0]]
-                    response_index = max(q)
+
+                    response_index = frame_counter
                     if responses[response_index][1]:  # make sure response is valid
                         gaze_class = responses[response_index][2]
                         assert gaze_class in classes
@@ -697,21 +696,15 @@ def generate_second_gaze_labels(args, force_create=False, visualize_confusion=Fa
             gaze_labels = np.load(str(Path.joinpath(args.faces_folder, video_file.stem, 'gaze_labels.npy')))
             gaze_labels_second = []
             for frame in range(gaze_labels.shape[0]):
-                if vfr:
-                    frame_stamp = frame_info[frame]
-                else:
-                    frame_stamp = frame
-                if start <= frame_stamp < end:  # only iterate on annotated frames
-                    q = [index for index, val in enumerate(responses) if frame_stamp >= val[0]]
-                    response_index = max(q)
-                    if responses[response_index][1]:
-                        gaze_class = responses[response_index][2]
-                        assert gaze_class in classes
-                        gaze_labels_second.append(classes[gaze_class])
-                    else:
-                        gaze_labels_second.append(-2)
+
+                response_index = frame
+                if responses[response_index][1]:
+                    gaze_class = responses[response_index][2]
+                    assert gaze_class in classes
+                    gaze_labels_second.append(classes[gaze_class])
                 else:
                     gaze_labels_second.append(-2)
+
             gaze_labels_second = np.array(gaze_labels_second)
             gaze_labels_second_filename = Path.joinpath(args.faces_folder, video_file.stem, 'gaze_labels_second.npy')
             if not gaze_labels_second_filename.is_file() or force_create:
