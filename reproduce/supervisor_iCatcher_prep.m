@@ -84,17 +84,18 @@ for ppt_counter = 1:length(video_files)
         % What is the 
         output_file = fullfile(output_dir, coder_directories{coder_counter}, [ppt, '.csv']);
 
-        % Run the conversion function to convert the coder file to the output format
-        convert_LookIt_coder_file_csv(coder_file, output_file);
-        fprintf('Copied coder file %s to %s\n', coder_file, output_file);
+        % Check if the output directory exists, if not create it
+        if exist(output_file) == 0
+
+            % Run the conversion function to convert the coder file to the output format
+            convert_LookIt_coder_file_csv(coder_file, output_file);
+            fprintf('Copied coder file %s to %s\n', coder_file, output_file);
+        end
     end
 
-    % Copy the video file to the output directory
-    video_file_path = fullfile(videos_path, video_file);
 
     % Get all the videos in that directory
-    potential_videos = dir([video_file_path, '/*.mp4']);
-
+    potential_videos = dir([videos_path, '/', ppt, '/*.mp4']);
 
     % Take the last video in the list
     if ~isempty(potential_video_names)
@@ -106,7 +107,9 @@ for ppt_counter = 1:length(video_files)
 
         % Copy the video file to the output directory
         output_video_file = fullfile(output_dir, 'videos', [ppt, '.mp4']);
-        copyfile(fullfile(videos_path, last_video), output_video_file);
+        if exist(output_video_file) == 0
+            copyfile(fullfile(videos_path, last_video), output_video_file);
+        end
     else
         fprintf('No videos found for %s\n', ppt);
         continue;
