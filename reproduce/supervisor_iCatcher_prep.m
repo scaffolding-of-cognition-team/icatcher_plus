@@ -50,7 +50,7 @@ for ppt_counter = 1:length(video_files)
     
     % Loop through the coders and check that they finished
     finished_coders = {};
-    for coder_counterj = 1:length(valid_coders)
+    for coder_counter = 1:length(valid_coders)
         coder_name = valid_coders{coder_counter};
         coder_file = fullfile(coders_path, [coder_name, '.mat']);
         
