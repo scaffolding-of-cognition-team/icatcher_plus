@@ -490,7 +490,7 @@ class socParser(BaseParser):
                 label_path = self.raw_dataset_path / f"coding_second/{video_id}.csv"
         print(f"Parsing {label_path}")
         labels = pd.read_csv(label_path)
-        labels.columns = ['frame', 'valid', 'gaze_class'] # Add headers of frame, gaze_class
+        labels.columns = ['frame', 'gaze_class'] # Add headers of frame, gaze_class
         output = []
         for index, row in labels.iterrows():
             frame = int(row['frame'])
