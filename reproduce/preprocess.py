@@ -533,6 +533,14 @@ def process_dataset_lowest_face(args, gaze_labels_only=False, force_create=False
             raise NotImplementedError
 
         responses, start, end = parser.parse(video_file.stem)
+
+        # Summarize the output of the parser
+        print("Parser output:")
+        print("Start frame: {}".format(start))
+        print("End frame: {}".format(end))
+        print("Number of responses: {}".format(len(responses)))
+        print('vfr: {}, fps: {}'.format(vfr, fps))
+
         ret_val, frame = cap.read()
         while ret_val:
             if responses:
