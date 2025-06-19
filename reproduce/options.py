@@ -287,11 +287,13 @@ def parse_arguments_for_preprocess():
     args.val_coding1_folder.mkdir(parents=True, exist_ok=True)
     args.val_coding2_folder.mkdir(parents=True, exist_ok=True)
     args.faces_folder.mkdir(parents=True, exist_ok=True)
+    args.gaze_classes = {"away": 0, "left": 1, "right": 2} 
     args.multi_face_folder = args.output_folder / "multi_face"
     args.face_data_folder = args.output_folder / "infant_vs_others"
     args.fc_model = Path(args.fc_model)
-    args.face_model_file = Path("models", "face_model.caffemodel")
-    args.config_file = Path("models", "config.prototxt")
+    iCatcher_models_dir = '/home/cte/.cache/icatcher_plus/0.2.3/icatcher+_models.zip.unzip/'
+    args.face_model_file = iCatcher_models_dir + 'face_model.caffemodel'
+    args.config_file = iCatcher_models_dir + "config.prototxt"
     if args.gpu_id == -1:
         args.device = "cpu"
     else:
