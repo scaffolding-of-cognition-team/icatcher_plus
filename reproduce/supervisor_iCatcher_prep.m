@@ -56,7 +56,7 @@ for ppt_counter = 1:length(video_files)
         
         coder_data = load(coder_file);
 
-        if length(coder_data.Output.FrameName) > 1000
+        if length(coder_data.Output.Experiment) > 1000
             finished_coders{end+1} = coder_name; %#ok<AGROW>
         end
         
