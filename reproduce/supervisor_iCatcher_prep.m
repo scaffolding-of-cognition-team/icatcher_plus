@@ -38,7 +38,7 @@ for ppt_counter = 1:length(video_files)
     valid_coders = {};
     for coder_counter = 1:length(coder_files)
         coder_name = coder_files(coder_counter).name(1:end-4); % Remove .mat extension
-        if contains(coder_name, 'Coder_FSpot') && contains(coder_name, 'Coder_Test')
+        if ~contains(coder_name, 'Coder_FSpot') && ~contains(coder_name, 'Coder_Test')
             valid_coders{end+1} = coder_name; %#ok<AGROW>
         end
     end
