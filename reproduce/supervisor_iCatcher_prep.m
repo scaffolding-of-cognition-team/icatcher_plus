@@ -98,7 +98,7 @@ for ppt_counter = 1:length(video_files)
     potential_videos = dir([videos_path, '/', ppt, '/*.mp4']);
 
     % Take the last video in the list
-    if ~isempty(potential_video_names)
+    if ~isempty(potential_videos)
         % Sort the videos by name 
         potential_video_names = sort({potential_videos.name});
 
