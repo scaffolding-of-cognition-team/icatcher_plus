@@ -501,6 +501,12 @@ class socParser(BaseParser):
         
         start = output[0][0] if output else 0 # What is the time when the first code is labeled
         end = output[-1][0] if output else 0 # What is the time when the last code is labeled
+
+        # Convert start and end to time stamps
+        if self.return_time_stamps:
+            start = start / self.fps * 1000  # convert to milliseconds
+            end = end / self.fps * 1000  # convert to milliseconds
+
         return output, start, end
 
 def parse_illegal_transitions_file(path, skip_header=True):
