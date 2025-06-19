@@ -463,6 +463,35 @@ class DatavyuParser(BaseParser):
         else:
             return None
 
+class socParser(BaseParser):
+    """
+    parses the soc dataset, which is a csv file with gaze classes center, left, right, away (CLRA)
+    """
+    def __init__(self, fps, raw_dataset_path, first_coder=True, return_time_stamps=False):
+        super().__init__()
+        self.fps = fps
+        self.first_coder = first_coder
+        self.return_time_stamps = return_time_stamps
+        self.raw_dataset_path = Path(raw_dataset_path)
+        self.classes = ["away", "center", "left", "right"]
+
+    def parse(self, video_id, label_path=None):
+        if label_path is None:
+            if self.first_coder:
+                label_path = self.raw_dataset_path / f"coding_first/{video_id}.csv"
+            else:
+                label_path = self.raw_dataset_path / f"coding_second/{video_id}.csv"
+        labels = pd.read_csv(label_path)
+        labels.columns = ['frame', 'gaze_class'] # Add headers of frame, gaze_class
+        output = []
+        for index, row in labels.iterrows():
+            frame = int(row['frame'])
+            if not self.return_time_stamps:
+                frame = int(frame * self.fps / 1000)
+            valid_flag = 1 if row['gaze_class'] != 'none' else 0
+            output.append([frame, valid_flag, row['gaze_class']])
+
+
 def parse_illegal_transitions_file(path, skip_header=True):
     illegal_transitions = []
     corrected_transitions = []
