@@ -48,6 +48,9 @@ def get_frame_information(video_file_path):
     video_stream_info = next(s for s in output['streams'] if s['codec_type'] == 'video')
     assert len(frame_times) == int(video_stream_info["nb_frames"])
     frame_times_ms = [1000*float(x) for x in frame_times]
-    assert frame_times_ms[0] == 0.0
+    if frame_times_ms[0] != 0.0:
+        logging.warning("Frame times do not start at 0.0, this may cause issues with frame indexing, so it is being fixed by shifting the time.")
+        frame_times_ms = [x - frame_times_ms[0] for x in frame_times_ms]
+
     # returns timestamps in milliseconds
     return frame_times_ms, int(video_stream_info["nb_frames"]), video_stream_info["time_base"]
