@@ -83,9 +83,11 @@ for ppt_counter = 1:length(video_files)
         coder_name = ordered_coders{coder_counter};
         coder_file = fullfile(coders_path, [coder_name, '.mat']);
         
-        % Copy the coder file to the output directory
-        output_file = fullfile(output_dir, coder_directories{coder_counter}, [base_name, '.mat']);
-        copyfile(coder_file, output_file);
+        % What is the 
+        output_file = fullfile(output_dir, coder_directories{coder_counter}, [base_name, '.csv']);
+
+        % Run the conversion function to convert the coder file to the output format
+        convert_Lookit_coder_file(coder_file, output_file);
         fprintf('Copied coder file %s to %s\n', coder_file, output_file);
     end
 
