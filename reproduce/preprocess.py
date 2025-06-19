@@ -701,7 +701,7 @@ def generate_second_gaze_labels(args, force_create=False, visualize_confusion=Fa
                 if responses[response_index][1]:
                     gaze_class = responses[response_index][2]
                     assert gaze_class in classes
-                    gaze_labels_second.append(classes[gaze_class])
+                    gaze_labels_second.append(classes.index(gaze_class))  # append gaze label
                 else:
                     gaze_labels_second.append(-2)
 
