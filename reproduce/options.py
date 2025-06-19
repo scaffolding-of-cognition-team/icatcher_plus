@@ -272,7 +272,7 @@ def parse_arguments_for_preprocess():
         assert args.pre_split.is_file()
     args.output_folder = Path(args.output_folder)
     args.output_folder.mkdir(parents=True, exist_ok=True)
-    
+
     args.video_folder = args.output_folder / "raw_videos"
     args.faces_folder = args.output_folder / "faces"
     args.label_folder = args.output_folder / "coding_first"
@@ -296,8 +296,8 @@ def parse_arguments_for_preprocess():
     args.face_data_folder = args.output_folder / "infant_vs_others"
     args.fc_model = Path(args.fc_model)
     args.iCatcher_models_dir = '/home/cte/.cache/icatcher_plus/0.2.3/icatcher+_models.zip.unzip/'
-    args.face_model_file = iCatcher_models_dir + 'face_model.caffemodel'
-    args.config_file = iCatcher_models_dir + "config.prototxt"
+    args.face_model_file = args.iCatcher_models_dir + 'face_model.caffemodel'
+    args.config_file = args.iCatcher_models_dir + "config.prototxt"
     if args.gpu_id == -1:
         args.device = "cpu"
     else:
