@@ -612,7 +612,7 @@ def process_dataset_lowest_face(args, gaze_labels_only=False, force_create=False
                     no_annotation_counter += 1
                     gaze_labels.append(-2)
                     face_labels.append(-2)
-                    # logging.info("[process_lkt_legacy] Skipping since frame not in range of annotation")
+                    logging.info("[process_lkt_legacy] Skipping since frame not in range of annotation")
             else:
                 no_annotation_counter += 1
                 gaze_labels.append(-2)
