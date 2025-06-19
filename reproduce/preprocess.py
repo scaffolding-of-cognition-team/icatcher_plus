@@ -674,6 +674,13 @@ def generate_second_gaze_labels(args, force_create=False, visualize_confusion=Fa
                                               csv_file,
                                               first_coder=False,
                                               return_time_stamps=vfr)
+            elif args.raw_dataset_type == "soc":
+                classes = list(args.gaze_classes.keys())
+                parser = parsers.socParser(fps,
+                                           args.raw_dataset_path,
+                                           classes,
+                                           first_coder=False,
+                                           return_time_stamps=vfr)
             else:
                 raise NotImplementedError
             try:
