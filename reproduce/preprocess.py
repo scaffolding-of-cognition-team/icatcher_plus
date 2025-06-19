@@ -531,7 +531,7 @@ def process_dataset_lowest_face(args, gaze_labels_only=False, force_create=False
                                        return_time_stamps=vfr)
         else:
             raise NotImplementedError
-
+        print(video_file.stem)
         responses, start, end = parser.parse(video_file.stem)
         ret_val, frame = cap.read()
         while ret_val:
