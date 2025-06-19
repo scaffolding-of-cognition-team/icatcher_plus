@@ -44,7 +44,7 @@ def is_video_vfr(video_file_path, get_meta_data=False):
 def get_frame_information(video_file_path):
     output = ffmpeg.probe(str(video_file_path), show_frames="-show_frames")
     video_frames = [frame for frame in output['frames'] if frame['media_type'] == 'video']
-    frame_times = [frame["pkt_pts_time"] for frame in video_frames]
+    frame_times = [frame["best_effort_timestamp_time"] for frame in video_frames]
     video_stream_info = next(s for s in output['streams'] if s['codec_type'] == 'video')
     assert len(frame_times) == int(video_stream_info["nb_frames"])
     frame_times_ms = [1000*float(x) for x in frame_times]
