@@ -261,7 +261,7 @@ class MyDataLoader:
         )  # use a random dataloader, with shuffling on so collage is of different children
         iterator = iter(random_dataloader)
         condition = 0
-        for bin_counter in len(bins):
+        for bin_counter in range(len(bins)):
             if len(bins[bin_counter]) < collage_size:
                 condition = 1
                 break
@@ -274,7 +274,7 @@ class MyDataLoader:
                     selected_paths[batch_data["label"][i]].append(batch_data["path"][i])
             
             # Check if we have enough images in each bin
-            for bin_counter in len(bins):
+            for bin_counter in range(len(bins)):
                 if len(bins[bin_counter]) < collage_size:
                     condition = 1
                     break
