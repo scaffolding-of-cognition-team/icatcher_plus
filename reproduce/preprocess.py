@@ -945,7 +945,7 @@ def preprocess_soc_dataset(args, force_create=False):
         in_file = raw_videos_path / (ppt + '.mp4')
         out_file = args.video_folder / (ppt + '.mp4')
         if not Path(in_file).is_file() or force_create:
-            os.symlink(in_file, out_file)
+            shutil.copyfile(in_file, out_file)
 
         # Now move the coding files to the appropriate folders
         for in_dir, out_dir in zip([raw_coding_first_path, out1_dir], [raw_coding_second_path, out2_dir]):
