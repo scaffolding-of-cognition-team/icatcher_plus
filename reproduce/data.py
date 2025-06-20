@@ -260,11 +260,16 @@ class MyDataLoader:
             num_workers=0
         )  # use a random dataloader, with shuffling on so collage is of different children
         iterator = iter(random_dataloader)
-        condition = 1
+        condition = 0
         for bin_counter in range(len(bins)):
             if len(bins[bin_counter]) >= collage_size:
-                condition = 0
-                break
+                condition += 1
+        
+        # condition is the number of bins that have enough images
+        if condition == len(bins):
+            condition = 0
+        else:
+            condition = 1
         
         while condition:
             try:
@@ -272,17 +277,25 @@ class MyDataLoader:
             except:
                 # Quit out
                 condition = 0
+                break
+
             for i in range(len(batch_data["label"])):
                 if len(bins[batch_data["label"][i]]) < collage_size:
                     bins[batch_data["label"][i]].append(batch_data["imgs"][i, 2, ...].permute(1, 2, 0))
                     selected_paths[batch_data["label"][i]].append(batch_data["path"][i])
             
             # Check if we have enough images in each bin
+            condition = 0
             for bin_counter in range(len(bins)):
                 if len(bins[bin_counter]) >= collage_size:
-                    condition = 0
-                    break
-
+                    condition += 1
+            
+            # condition is the number of bins that have enough images
+            if condition == len(bins):
+                condition = 0
+            else:
+                condition = 1
+            
         for class_counter, class_id in enumerate(classes.keys()):
             imgs = torch.stack(bins[class_counter]).cpu().numpy()
             imgs = (imgs - np.min(imgs, axis=(1, 2, 3), keepdims=True)) / (np.max(imgs, axis=(1, 2, 3), keepdims=True) - np.min(imgs, axis=(1, 2, 3), keepdims=True))
