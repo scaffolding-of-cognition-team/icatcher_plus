@@ -948,7 +948,7 @@ def preprocess_soc_dataset(args, force_create=False):
             shutil.copyfile(in_file, out_file)
 
         # Now move the coding files to the appropriate folders
-        for in_dir, out_dir in zip([raw_coding_first_path, out1_dir], [raw_coding_second_path, out2_dir]):
+        for in_dir, out_dir in zip([raw_coding_first_path, raw_coding_second_path], [out1_dir, out2_dir]):
             
             in_file = in_dir / (ppt + coding_ext)
             out_file = out_dir / (ppt + coding_ext)
