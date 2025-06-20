@@ -248,9 +248,10 @@ class MyDataLoader:
         :param collage_size the size of the collage, must have integer square root
         :return:
         """
-        classes = {0: "away", 1: "left", 2: "right"}
-        bins = [[], [], []]  # bin of images per class
-        selected_paths = [[], [], []]  # bin of selected image path per class
+        
+        classes = self.opt.gaze_classes  # dict of classes
+        bins = [[] for _ in range(len(classes.keys()))]  # bin of images per class
+        selected_paths = [[] for _ in range(len(classes.keys()))]  # bin of selected image path per class
         assert np.sqrt(collage_size) == int(np.sqrt(collage_size))  # collage size must have an integer square root
         random_dataloader = torch.utils.data.DataLoader(
             self.dataset,

@@ -13,7 +13,7 @@ def parse_arguments_for_training():
     parser = argparse.ArgumentParser()
     parser.add_argument("experiment_name", help="The name of the experiment.")
     parser.add_argument("dataset_folder", help="The path to the folder containing the data")
-    parser.add_argument("--number_of_classes", type=int, default=3, help="number of classes to predict")
+    parser.add_argument("--class_names", type=str, default=["away,left,right"], help="Comma separated list of names of classes, which will be turned into a dictionary in order with a 0 index")
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size to train with")
     parser.add_argument("--image_size", type=int, default=100, help="All images will be resized to this size")
     parser.add_argument("--sliding_window_size", type=int, default=9, help="Number of frames in rolling window of each datapoint")
@@ -60,6 +60,12 @@ def parse_arguments_for_training():
     parser.add_argument("-v", "--verbosity", type=str, choices=["debug", "info", "warning"], default="info",
                         help="Selects verbosity level")
     args = parser.parse_args()
+
+    # Sort out the labels used for training
+    class_names = args.class_names.split(",")
+    args.gaze_classes = {name: i for i, name in enumerate(class_names)}
+    args.number_of_classes = len(args.gaze_classes)
+        
     args.dataset_folder = Path(args.dataset_folder)
     # add some useful arguments for the rest of the code
     args.distributed = len(args.gpu_id.split(",")) > 1
