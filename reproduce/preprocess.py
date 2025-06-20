@@ -944,7 +944,7 @@ def preprocess_soc_dataset(args, force_create=False):
         # Make sure the data is in the raw_videos folder, regardless of whether it is train or validation
         in_file = raw_videos_path / (ppt + '.mp4')
         out_file = args.video_folder / (ppt + '.mp4')
-        if not Path(in_file).is_file() or force_create:
+        if not Path(out_file).is_file() or force_create:
             shutil.copyfile(in_file, out_file)
 
         # Now move the coding files to the appropriate folders
