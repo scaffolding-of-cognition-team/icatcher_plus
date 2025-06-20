@@ -953,7 +953,7 @@ def preprocess_soc_dataset(args, force_create=False):
             in_file = in_dir / (ppt + coding_ext)
             out_file = out_dir / (ppt + coding_ext)
             if Path(in_file).is_file() and (Path(out_file).is_file() == 0 or force_create):
-                os.symlink(in_file, out_file)
+                shutil.copyfile(in_file, out_file)
 
 
 if __name__ == "__main__":
