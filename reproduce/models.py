@@ -311,7 +311,7 @@ class Predictor_fc(torch.nn.Module):
         in_channel = 512 * n if add_box else 256 * n
         self.fc1 = torch.nn.Linear(in_channel, 512)
         self.fc2 = torch.nn.Linear(512, 512)
-        self.fc3 = torch.nn.Linear(512, args.number_of_classes)
+        self.fc3 = torch.nn.Linear(512, self.args.number_of_classes)
         self.bn1 = torch.nn.BatchNorm1d(512)
         self.bn2 = torch.nn.BatchNorm1d(512)
         self.dropout1 = torch.nn.Dropout(0.2)
