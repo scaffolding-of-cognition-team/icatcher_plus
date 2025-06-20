@@ -1,3 +1,6 @@
+# To run this script we use:
+# python ./reproduce/train.py CLRA preprocessed/CLRA/ --class_names away,center,left,right --gpu_id -1
+
 import os
 import options
 import logging
@@ -43,6 +46,7 @@ def train_loop(rank, args):
         for batch_index, batch in enumerate(train_dataloader.dataloader):
             model.optimizer.zero_grad()
             output = model.network(batch)
+            print(batch["label"])
             train_loss = model.loss_fn(output, batch["label"])
             _, predictions = torch.max(output, 1)
             train_loss.backward()
