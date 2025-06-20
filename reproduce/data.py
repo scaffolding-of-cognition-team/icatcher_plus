@@ -248,7 +248,7 @@ class MyDataLoader:
         :param collage_size the size of the collage, must have integer square root
         :return:
         """
-        
+
         classes = self.opt.gaze_classes  # dict of classes
         bins = [[] for _ in range(len(classes.keys()))]  # bin of images per class
         selected_paths = [[] for _ in range(len(classes.keys()))]  # bin of selected image path per class
@@ -273,7 +273,7 @@ class MyDataLoader:
                         (len(bins[1]) < collage_size) or \
                         (len(bins[2]) < collage_size)
         for class_id in classes.keys():
-            imgs = torch.stack(bins[class_id]).cpu().numpy()
+            imgs = torch.stack(bins[classes.index(class_id)]).cpu().numpy()
             imgs = (imgs - np.min(imgs, axis=(1, 2, 3), keepdims=True)) / (np.max(imgs, axis=(1, 2, 3), keepdims=True) - np.min(imgs, axis=(1, 2, 3), keepdims=True))
             save_path = Path(self.opt.experiment_path, "{}_collage_{}.png".format(self.opt.phase, classes[class_id]))
             visualize.make_gridview(imgs, ncols=int(np.sqrt(collage_size)), save_path=save_path)
