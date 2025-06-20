@@ -283,3 +283,5 @@ class MyDataLoader:
             imgs = (imgs - np.min(imgs, axis=(1, 2, 3), keepdims=True)) / (np.max(imgs, axis=(1, 2, 3), keepdims=True) - np.min(imgs, axis=(1, 2, 3), keepdims=True))
             save_path = Path(self.opt.experiment_path, "{}_collage_{}.png".format(self.opt.phase, class_id))
             visualize.make_gridview(imgs, ncols=int(np.sqrt(collage_size)), save_path=save_path)
+        
+        logging.info("Collage images saved to {}".format(save_path))
