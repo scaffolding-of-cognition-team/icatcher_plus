@@ -955,6 +955,14 @@ def preprocess_soc_dataset(args, force_create=False):
             if Path(in_file).is_file() and (Path(out_file).is_file() == 0 or force_create):
                 shutil.copyfile(in_file, out_file)
 
+        # Do it again but put them in the labels folder
+        for in_dir, out_dir in zip([raw_coding_first_path, raw_coding_second_path], [args.label_folder, args.label2_folder]):
+            
+            in_file = in_dir / (ppt + coding_ext)
+            out_file = out_dir / (ppt + coding_ext)
+            if Path(in_file).is_file() and (Path(out_file).is_file() == 0 or force_create):
+                shutil.copyfile(in_file, out_file)
+
 
 if __name__ == "__main__":
     args = options.parse_arguments_for_preprocess()
