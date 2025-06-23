@@ -242,6 +242,14 @@ class MyDataLoader:
         if self.opt.rank == 0:
             self.plot_sample_collage()
 
+        # Write out a list of letters into a txt file
+        if self.opt.rank == 0:
+            with open(Path(self.opt.experiment_path, "classes.txt"), 'w') as f:
+                writer = csv.writer(f, delimiter=',')
+                for key in self.opt.gaze_classes.keys():
+                    writer.writerow([key, self.opt.gaze_classes[key]])
+            logging.info("Classes written to {}".format(Path(self.opt.experiment_path, "classes.txt")))
+
     def plot_sample_collage(self, collage_size=25):
         """
         plots a collage of images from dataset
