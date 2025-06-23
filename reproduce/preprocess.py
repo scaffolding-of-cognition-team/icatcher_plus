@@ -9,8 +9,6 @@
 #
 # For preprocessing this is the final command that worked
 # python ./reproduce/preprocess.py raw/CLRA/ preprocessed/CLRA/ --raw_dataset_type soc --fc_model /home/cte/.cache/icatcher_plus/0.2.3/icatcher+_models.zip.unzip/face_classifier_lookit.pth
-#
-# For training this is the command that worked:
 
 
 import os
