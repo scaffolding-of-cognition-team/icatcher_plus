@@ -207,7 +207,12 @@ def load_models(opt, download_only=False):
             )
         else:
             raise NotImplementedError
-        path_to_gaze_model = Path(file_paths[file_names.index(opt.model)])
+        try:
+            path_to_gaze_model = Path(file_paths[file_names.index(opt.model)])
+        except:
+            print("Model {} not found in the downloaded files, so assuming it is a full path".format(opt.model))
+            path_to_gaze_model = Path(opt.model)
+
         is_regnet = "regnet" in str(path_to_gaze_model.stem)
         path_to_fc_model = file_paths[file_names.index(opt.fc_model)]
         gaze_model = models.GazeCodingModel(opt, is_regnet=is_regnet).to(opt.device)

@@ -82,12 +82,12 @@ class DataTransforms:
 
 
 class Predictor_fc(torch.nn.Module):
-    def __init__(self, n, add_box):
+    def __init__(self, n, add_box, num_classes=3):
         super().__init__()
         in_channel = 512 * n if add_box else 256 * n
         self.fc1 = torch.nn.Linear(in_channel, 512)
         self.fc2 = torch.nn.Linear(512, 512)
-        self.fc3 = torch.nn.Linear(512, 3)
+        self.fc3 = torch.nn.Linear(512, num_classes)
         self.bn1 = torch.nn.BatchNorm1d(512)
         self.bn2 = torch.nn.BatchNorm1d(512)
         self.dropout1 = torch.nn.Dropout(0.2)
@@ -130,7 +130,7 @@ class GazeCodingModel(torch.nn.Module):
         else:
             self.encoder_img = resnet18(num_classes=256).to(self.args.device)
         self.encoder_box = Encoder_box().to(self.args.device)
-        self.predictor = Predictor_fc(self.n, add_box).to(self.args.device)
+        self.predictor = Predictor_fc(self.n, add_box, args.num_classes).to(self.args.device)
 
     def forward(self, data):
         imgs = data["imgs"]  # bs x n x 3 x 100 x 100

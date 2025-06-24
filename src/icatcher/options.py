@@ -28,12 +28,6 @@ def parse_arguments(my_string=None):
         "--model",
         type=str,
         default="icatcher+_lookit_regnet.pth",
-        choices=[
-            "icatcher+_lookit.pth",
-            "icatcher+_lookit_regnet.pth",
-            "icatcher+_bw-cali.pth",
-            "icatcher+_senegal.pth",
-        ],
         help="Model file that will be used for gaze detection.",
     )
     parser.add_argument(
@@ -215,6 +209,12 @@ def parse_arguments(my_string=None):
         type=int,
         default=2,
         help="Stride between frames in rolling window. WARNING: changing default results in untested behavior.",
+    )
+    parser.add_argument(
+        "--num_classes",
+        type=int,
+        default=3,
+        help="Number of classes for classification.",
     )
     if my_string is not None:
         args = parser.parse_args(my_string.split())
