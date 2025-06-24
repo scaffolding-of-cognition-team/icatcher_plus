@@ -5,6 +5,15 @@
 # Introduction
 This repository contains the official code for [iCatcher+](https://doi.org/10.1177/25152459221147250), a tool for performing automatic annotation of discrete infant gaze directions from videos collected in the lab, field or online (remotely). 
 
+------- EDITS --------
+This code has been moderately edited to make it able to be trained on arbitrary classes, thus allowing us to train on left/center/right instead.
+
+The trained models are stored in 'runs/'. 
+
+To create a new model, go down to 'Training iCatcher' for instructions
+
+----------------------
+
 The codebase comprises three parts: 
 1. A Python-based ML tool for generating gaze annotations
 2. A browser-based web app for reviewing the generated annotations
@@ -109,6 +118,37 @@ When you open the iCatcher+ UI, you will be met with a pop-up inviting you to up
 Once you've uploaded a directory, you should see a pop-up asking whether you are sure want to upload all files. Rest assured, this will not upload the files to any remote servers. This is only giving the local browser permission to access those files. The files will stay local to whatever computer is running the browser.
 
 At this point, you should see the video on the screen (you may need to give it a few second to load). Now you can start to review the annotations. Below the video you'll see heatmaps giving you a visual overview of the labels for each frame, as well as the confidence level for each frame.
+
+# Training iCatcher (SOC notes)
+
+To train iCatcher, there are several steps, as described below:
+
+1. Convert manually coded data to a CSV.  
+The input to the coding is a CSV file with labels for each frame, thus the mat files that are output from the gaze coding have to be converted. To convert LookIt data, run the `supervisor_iCatcher_prep.m` script, which uses `convert_LookIt_coder_file_csv.m` as its engine. The inputs are a pattern for a type of data to use in training (`CounterCuing-01_`) and the output directory (`~/Desktop/Experiments/icatcher_plus/raw/CLRA/`). This will use two coders if multple are found, and will then shuffle their order
+
+2. Run `preprocess.py`  
+Run the preprocessing steps on the raw data so that it is ready to be used for training. We created a general purpose parser that should work for any data created using step 1. 
+`training_type=CLRA`
+`python ./reproduce/preprocess.py raw/${training_type}/ preprocessed/${training_type}/ --raw_dataset_type soc --fc_model /home/cte/.cache/icatcher_plus/0.2.3/icatcher+_models.zip.unzip/face_classifier_lookit.pth`
+
+The long path points to the face model that was used, since the default paths were not found. This path was acquired the first time running iCatcher. It will produce outputs specifying the face crops, which you should review to make sure it doesnt accidentally get parents. Moreover, you should review the confusion matrices, which are created for the participants that have two coders
+
+3. Run `train.py`
+In a very long process, training will create a model trained on the labelled data. To get this script to work, we had to change several places that assumed a specific number of labels that will be used. Now, the input to the training function can take these labels so that it can be set in line (as a comma separated single line). In our experience, it has taken 24 hours to train on 10 participants
+
+`python ./reproduce/train.py ${training_type} preprocessed/${training_type}/ --class_names away,center,left,right --gpu_id -1`
+
+The output of the training will be in `runs/${training_type}/` with the model file you want being called `latest_net.pth`
+
+4. Use trained model.
+
+To run the model, use the line below, with the specified inputs. It takes a while, approximately x4 the length of the video
+
+`# model_file: path to the iCatcher trained data, usually something like "runs/model/latest_net.pth"`
+`# frames_dir: path to where you want to where the participant data is.`
+`# movie_name: What is the name of the movie you are using`
+`icatcher --model $model_file --output_annotation ${frames_dir}/iCatcher/ --output_video_path ${frames_dir}/iCatcher/ ${frames_dir}/$movie_name --overwrite`
+
 
 # Datasets access
 
