@@ -147,8 +147,9 @@ To run the model, use the line below, with the specified inputs. It takes a whil
 `# model_file: path to the iCatcher trained data, usually something like "runs/model/latest_net.pth"`
 `# frames_dir: path to where you want to where the participant data is.`
 `# movie_name: What is the name of the movie you are using`
-`icatcher --model $model_file --output_annotation ${frames_dir}/iCatcher/ --output_video_path ${frames_dir}/iCatcher/ ${frames_dir}/$movie_name --overwrite`
+`icatcher --model $model_file --output_annotation ${frames_dir}/iCatcher/ --output_video_path ${frames_dir}/iCatcher/ --num_classes 4 ${frames_dir}/$movie_name --overwrite`
 
+In training iCatcher, we made several edits, which is why it is best to run iCatcher using the local references in this directory, rather than the installed files in the conda environment.
 
 # Datasets access
 
