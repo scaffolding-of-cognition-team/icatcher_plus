@@ -694,8 +694,9 @@ def generate_second_gaze_labels(args, force_create=False, visualize_confusion=Fa
                 raise NotImplementedError
             try:
                 responses, start, end = parser.parse(video_file.stem)
-            except (IndexError, TypeError) as e:
+            except (IndexError, TypeError, FileNotFoundError) as e:
                 logging.info('[gen_2nd_labels] Failed to parse!')
+                logging.info(str(e))
                 continue
             gaze_labels = np.load(str(Path.joinpath(args.faces_folder, video_file.stem, 'gaze_labels.npy')))
             gaze_labels_second = []
