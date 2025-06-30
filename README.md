@@ -123,8 +123,8 @@ At this point, you should see the video on the screen (you may need to give it a
 
 To train iCatcher, there are several steps, as described below:
 
-1. Convert manually coded data to a CSV.  
-The input to the coding is a CSV file with labels for each frame, thus the mat files that are output from the gaze coding have to be converted. To convert LookIt data, run the `supervisor_iCatcher_prep.m` script, which uses `convert_LookIt_coder_file_csv.m` as its engine. The inputs are a pattern for a type of data to use in training (`CounterCuing-01_`) and the output directory (`~/Desktop/Experiments/icatcher_plus/raw/CLRA/`). This will use two coders if multple are found, and will then shuffle their order
+1. Convert manually coded data to a CSV. 
+The input to the iCatcher coding is a CSV file with labels for each frame, thus the mat files that are output from the gaze coding have to be converted. To convert LookIt data, run the `supervisor_iCatcher_prep.m` script, which uses `convert_LookIt_coder_file_csv.m` as its engine. The inputs are a pattern for a type of data to use in training (`CounterCuing-01_`) and the output directory (`~/Desktop/Experiments/icatcher_plus/raw/CLRA/`). This will use two coders if multple are found, and will then shuffle their order
 
 2. Run `preprocess.py`  
 Run the preprocessing steps on the raw data so that it is ready to be used for training. We created a general purpose parser that should work for any data created using step 1. 
